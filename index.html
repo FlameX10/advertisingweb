@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panvel Industrial Fasteners Pvt Ltd</title>
     <style>
+        :root {
+            --accent: #FF6B00;
+            --gold: #FFD700;
+            --dark: #1a1a1a;
+            --shadow-light: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-heavy: 0 25px 60px rgba(0,0,0,0.25);
+            --transition-smooth: cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,17 +24,44 @@
             font-family: 'Poppins', sans-serif;
             background: #f5f5f5;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
+        /* Enhanced top banner with moving gradient */
         .top-banner {
-            background: #FF6B00;
+            background: linear-gradient(45deg, var(--accent), #ff8533, var(--accent));
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite, slideDown 0.6s ease-out;
             color: white;
             text-align: center;
-            padding: 8px;
+            padding: 12px;
             font-size: 0.9em;
             font-weight: 600;
             letter-spacing: 1px;
-            animation: slideDown 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .top-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: bannerSweep 2s infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes bannerSweep {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
         @keyframes slideDown {
@@ -37,19 +73,53 @@
             max-width: 1400px;
             margin: 0 auto;
             background: white;
+            position: relative;
         }
 
         .header {
-            background: #1a1a1a;
+            background: var(--dark);
             color: white;
             padding: 60px 40px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Logo Styles */
+        /* Floating particles background */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(2px 2px at 20px 30px, rgba(255,215,0,0.3), transparent),
+                              radial-gradient(2px 2px at 40px 70px, rgba(255,107,0,0.2), transparent),
+                              radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.1), transparent);
+            background-repeat: repeat;
+            background-size: 150px 100px;
+            animation: particles 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes particles {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-100px); }
+        }
+
+        /* Enhanced logo with floating animation */
         .logo-container {
             margin-bottom: 20px;
-            animation: slideDown 0.8s ease-out;
+            animation: logoFloat 4s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(1deg); }
+            50% { transform: translateY(-5px) rotate(-1deg); }
+            75% { transform: translateY(-15px) rotate(0.5deg); }
         }
 
         .company-logo {
@@ -57,30 +127,50 @@
             max-height: 150px;
             width: auto;
             height: auto;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-            transition: transform 0.3s ease;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
+            transition: all 0.5s var(--transition-smooth);
+            border-radius: 50%;
         }
 
         .company-logo:hover {
-            transform: scale(1.05);
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 15px 35px rgba(255,107,0,0.6));
         }
 
+        /* Animated company name */
         .company-name {
             font-size: 3em;
             font-weight: 900;
             margin-bottom: 30px;
             letter-spacing: 2px;
-            color: #FFD700;
+            color: var(--gold);
             text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { text-shadow: 0 0 20px rgba(255,215,0,0.5); }
+            to { text-shadow: 0 0 30px rgba(255,215,0,0.8), 0 0 40px rgba(255,215,0,0.3); }
         }
 
         .address-box {
             background: rgba(255, 255, 255, 0.1);
             padding: 25px;
-            border-radius: 10px;
+            border-radius: 15px;
             max-width: 900px;
             margin: 0 auto;
-            border: 2px solid #FF6B00;
+            border: 2px solid var(--accent);
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .address-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255,107,0,0.3);
         }
 
         .address {
@@ -90,23 +180,27 @@
             font-weight: 500;
         }
 
-        /* === Services Section (New Layout) === */
+        /* Enhanced Services Section */
         .services-section {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 60px 20px;
-            background-color: #f9f9f9;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #f9f9f9 0%, #e8e8e8 100%);
+            position: relative;
         }
 
+        /* Animated section title */
         .section-title {
             text-align: center;
             font-size: 2.5em;
             font-weight: 800;
-            color: #1a1a1a;
-            margin-bottom: 50px;
+            color: var(--dark);
+            margin-bottom: 60px;
             text-transform: uppercase;
             letter-spacing: 2px;
+            position: relative;
+            animation: fadeInUp 1s ease-out;
         }
 
         .section-title::after {
@@ -114,8 +208,20 @@
             display: block;
             width: 100px;
             height: 4px;
-            background: #FF6B00;
+            background: linear-gradient(45deg, var(--accent), var(--gold));
             margin: 15px auto 0;
+            border-radius: 2px;
+            animation: widthExpand 1.5s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes widthExpand {
+            from { width: 0; }
+            to { width: 100px; }
         }
 
         .services-grid {
@@ -129,21 +235,39 @@
             margin: 0 auto;
         }
 
+        /* Advanced service cards */
         .service-card {
             background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 50px 30px;
+            border-radius: 25px;
+            box-shadow: var(--shadow-light);
+            padding: 40px 30px;
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.5s var(--transition-smooth);
             width: 100%;
-            max-width: 330px;
+            max-width: 350px;
             margin: 0 auto;
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: cardSlideUp 0.8s ease-out forwards;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
+        /* Staggered animation delays */
+        .service-card:nth-child(1) { animation-delay: 0.2s; }
+        .service-card:nth-child(2) { animation-delay: 0.4s; }
+        .service-card:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes cardSlideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Enhanced shimmer effect */
         .service-card::before {
             content: '';
             position: absolute;
@@ -151,52 +275,46 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-            border: 2px solid #FF6B00;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.8s ease;
+            transform: skewX(-20deg);
         }
 
         .service-card:hover::before {
             left: 100%;
         }
 
-        .service-card:hover img {
-            transform: scale(1.2) rotate(5deg);
-            filter: brightness(1.2);
+        /* 3D tilt effect on hover */
+        .service-card:hover {
+            transform: translateY(-20px) rotateX(5deg) rotateY(5deg) scale(1.02);
+            box-shadow: var(--shadow-heavy);
+            border: 2px solid var(--accent);
         }
 
-        .service-card:hover h3 {
-            transform: scale(1.05);
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .service-card:hover .call-box {
-            transform: scale(1.08);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .service-card:hover .call-text {
-            color: #FF6B00;
-            font-weight: 700;
-        }
-
+        /* Service card images - REMOVED BOUNCING ANIMATION */
         .service-card img {
             width: 80px;
             height: 80px;
             margin-bottom: 25px;
-            transition: all 0.4s ease;
+            transition: all 0.5s var(--transition-smooth);
         }
 
+        .service-card:hover img {
+            transform: scale(1.3) rotate(10deg) translateY(-10px);
+            filter: brightness(1.2) drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+
+        /* Glowing text effects */
         .service-card h3 {
             font-size: 22px;
             font-weight: 700;
             margin-bottom: 20px;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+        }
+
+        .service-card:hover h3 {
+            transform: scale(1.1);
+            text-shadow: 0 0 20px rgba(0,0,0,0.3);
         }
 
         .call-text {
@@ -205,8 +323,16 @@
             margin-bottom: 15px;
             letter-spacing: 1px;
             transition: all 0.3s ease;
+            position: relative;
         }
 
+        .service-card:hover .call-text {
+            color: var(--accent);
+            font-weight: 700;
+            transform: scale(1.05);
+        }
+
+        /* Enhanced call boxes with gradient borders */
         .call-box {
             display: flex;
             align-items: center;
@@ -221,107 +347,200 @@
             width: 100%;
             max-width: 280px;
             margin: 0 auto 25px;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .call-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            padding: 3px;
+            background: linear-gradient(45deg, transparent, rgba(255,107,0,0.5), transparent);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover .call-box::before {
+            opacity: 1;
         }
 
         .hoarding { border-color: #007bff; background: #e9f3ff; }
         .lubricants { border-color: #ff7b00; background: #fff1e6; }
         .batteries { border-color: #28a745; background: #eaffea; }
 
-        /* Enhanced individual card hover effects */
         .service-card:hover .hoarding {
             background: linear-gradient(135deg, #e9f3ff, #cce7ff);
             border-color: #0056b3;
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,123,255,0.3);
         }
 
         .service-card:hover .lubricants {
             background: linear-gradient(135deg, #fff1e6, #ffe4cc);
             border-color: #cc5500;
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255,123,0,0.3);
         }
 
         .service-card:hover .batteries {
             background: linear-gradient(135deg, #eaffea, #d4f5d4);
             border-color: #1e7e34;
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(40,167,69,0.3);
         }
 
+        /* Animated phone icons */
         .phone-icon {
             font-size: 22px;
             margin-right: 10px;
             color: deeppink;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            animation: phoneRing 3s ease-in-out infinite;
+        }
+
+        @keyframes phoneRing {
+            0%, 10%, 20% { transform: rotate(0deg); }
+            5%, 15% { transform: rotate(-10deg); }
+            100% { transform: rotate(0deg); }
         }
 
         .service-card:hover .phone-icon {
-            color: #FF6B00;
-            transform: scale(1.2);
+            color: var(--accent);
+            transform: scale(1.3) rotate(15deg);
+            animation: phoneRingFast 0.5s ease-in-out infinite;
         }
 
+        @keyframes phoneRingFast {
+            0%, 50%, 100% { transform: scale(1.3) rotate(15deg); }
+            25%, 75% { transform: scale(1.4) rotate(25deg); }
+        }
+
+        /* Enhanced copy button with ripple effect */
         .copy-btn {
             display: inline-block;
             margin-top: 15px;
-            background: #f1f1f1;
+            background: linear-gradient(45deg, #f1f1f1, #e5e5e5);
             border: none;
-            border-radius: 10px;
-            padding: 10px 15px;
+            border-radius: 15px;
+            padding: 12px 18px;
             cursor: pointer;
             font-size: 18px;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .copy-btn:hover {
-            background: #e5e5e5;
-            transform: scale(1.05);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
 
-        /* Pulse animation for hover */
+        .copy-btn:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        /* Ripple effect for copy button */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.6);
+            transform: scale(0);
+            animation: rippleAnimation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes rippleAnimation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced pulse animation */
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,107,0,0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255,107,0,0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,107,0,0); }
         }
 
         .service-card:hover .copy-btn {
             animation: pulse 1.5s infinite;
-            background: #FF6B00;
+            background: linear-gradient(45deg, var(--accent), #ff8533);
             color: white;
         }
 
+        /* Enhanced notification */
         .copied-notification {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #00C853;
+            background: linear-gradient(45deg, #00C853, #00E676);
             color: white;
             padding: 15px 25px;
-            border-radius: 10px;
+            border-radius: 15px;
             font-weight: 600;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            animation: slideInRight 0.4s ease-out;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             z-index: 1000;
+            animation: notificationSlide 0.5s ease-out;
+            transform: translateX(100%);
         }
 
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(100px); }
-            to { opacity: 1; transform: translateX(0); }
+        @keyframes notificationSlide {
+            0% { transform: translateX(100%); opacity: 0; }
+            10% { transform: translateX(0); opacity: 1; }
+            90% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
         }
 
+        /* Footer enhancements */
         .footer {
-            background: #1a1a1a;
+            background: linear-gradient(135deg, var(--dark), #2a2a2a);
             color: white;
             text-align: center;
-            padding: 30px;
+            padding: 40px;
             font-size: 1.1em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
         }
 
         .footer-highlight {
-            color: #FFD700;
+            color: var(--gold);
             font-weight: 700;
+            animation: textShimmer 2s ease-in-out infinite;
         }
 
+        #p1{
+            font-size: medium;
+        }
+
+        @keyframes textShimmer {
+            0%, 100% { text-shadow: 0 0 5px rgba(255,215,0,0.5); }
+            50% { text-shadow: 0 0 20px rgba(255,215,0,0.8); }
+        }
+
+        /* Responsive design */
         @media (max-width: 768px) {
             .company-name {
-                font-size: 1.5em;
+                font-size: 1.8em;
             }
             .services-grid {
                 grid-template-columns: 1fr;
@@ -329,10 +548,28 @@
             }
             .service-card {
                 max-width: 400px;
+                padding: 30px 20px;
             }
             .company-logo {
-                max-width: 100px;
-                max-height: 100px;
+                max-width: 120px;
+                max-height: 120px;
+            }
+            .service-card:hover {
+                transform: translateY(-10px) scale(1.02);
+            }
+        }
+
+        /* Scroll animations */
+        @media (prefers-reduced-motion: no-preference) {
+            .fade-in {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: all 0.8s ease-out;
+            }
+
+            .fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
@@ -344,11 +581,10 @@
 
     <div class="container">
         <div class="header">
-            <!-- Logo div added here -->
             <div class="logo-container">
                 <img src="./logo.jpg" alt="Panvel Industrial Fasteners Logo" class="company-logo">
             </div>
-            <h1 class="company-name">PANVEL INDUSTRIAL FASTENERS PVT LTD</h1>
+            <h1 class="company-name">PANVEL Industrial FASTENERS PVT LTD</h1>
             <div class="address-box">
                 <p class="address">
                     📍 PLOT NO. 29 TO 33 & 37, JAWAHAR COOPERATIVE INDUSTRIAL ESTATE<br>
@@ -358,46 +594,44 @@
             </div>
         </div>
 
-        <!-- ✅ New Modern Services Section -->
         <section class="services-section">
             <div>
                 <h2 class="section-title">Our Services</h2>
                 <div class="services-grid">
                     
                     <!-- Card 1 -->
-                    <div class="service-card">
+                    <div class="service-card" data-service="hoarding">
                         <img src="https://em-content.zobj.net/source/microsoft-teams/363/loudspeaker_1f4e2.png" alt="Hoarding">
                         <h3 style="color:#007bff;">HOARDING<br>BOOKING</h3>
                         <p class="call-text">CALL NOW</p>
                         <div class="call-box hoarding">
-                            <span class="phone-icon">📞</span>09221472361
+                            <span class="phone-icon">📞</span><p id="p1">+91 9221472361</p>
                         </div>
-                        <button class="copy-btn" onclick="copyPhone('09221472361')">📋</button>
+                        <button class="copy-btn" data-phone="09221472361">📋 Copy</button>
                     </div>
 
                     <!-- Card 2 -->
-                    <div class="service-card">
+                    <div class="service-card" data-service="lubricants">
                         <img src="https://em-content.zobj.net/source/microsoft-teams/363/oil-drum_1f6e2-fe0f.png" alt="Lubricants">
                         <h3 style="color:#ff6600;">LUBRICANTS</h3>
                         <br/>
                         <br/>
                         <p class="call-text">CALL NOW</p>
-                        
                         <div class="call-box lubricants">
-                            <span class="phone-icon">📞</span>08693001001
+                            <span class="phone-icon">📞</span><p id="p1">+91 8693001001</p>
                         </div>
-                        <button class="copy-btn" onclick="copyPhone('08693001001')">📋</button>
+                        <button class="copy-btn" data-phone="08693001001">📋 Copy</button>
                     </div>
 
                     <!-- Card 3 -->
-                    <div class="service-card">
+                    <div class="service-card" data-service="batteries">
                         <img src="https://em-content.zobj.net/source/microsoft-teams/363/battery_1f50b.png" alt="Batteries">
                         <h3 style="color:#28a745;">BATTERIES &<br>UPS</h3>
                         <p class="call-text">CALL NOW</p>
                         <div class="call-box batteries">
-                            <span class="phone-icon">📞</span>09223397736
+                            <span class="phone-icon">📞</span><p id="p1">+91 9223397736</p>
                         </div>
-                        <button class="copy-btn" onclick="copyPhone('09223397736')">📋</button>
+                        <button class="copy-btn" data-phone="09223397736">📋 Copy</button>
                     </div>
 
                 </div>
@@ -410,32 +644,136 @@
     </div>
 
     <script>
-        function copyPhone(phoneNumber) {
-            navigator.clipboard.writeText(phoneNumber).then(() => {
-                showNotification('Phone number copied: ' + phoneNumber);
-            }).catch(() => {
-                const textArea = document.createElement("textarea");
-                textArea.value = phoneNumber;
-                document.body.appendChild(textArea);
-                textArea.select();
+        // Enhanced copy function with ripple effect
+        function copyPhone(phoneNumber, button) {
+            // Create ripple effect
+            const rect = button.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (event.clientX - rect.left - size/2) + 'px';
+            ripple.style.top = (event.clientY - rect.top - size/2) + 'px';
+            
+            button.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+
+            // Copy to clipboard
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(phoneNumber).then(() => {
+                    showNotification('Phone number copied: ' + phoneNumber);
+                }).catch(() => {
+                    fallbackCopy(phoneNumber);
+                });
+            } else {
+                fallbackCopy(phoneNumber);
+            }
+        }
+
+        function fallbackCopy(phoneNumber) {
+            const textArea = document.createElement("textarea");
+            textArea.value = phoneNumber;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
                 document.execCommand('copy');
-                document.body.removeChild(textArea);
                 showNotification('Phone number copied: ' + phoneNumber);
-            });
+            } catch (err) {
+                showNotification('Unable to copy phone number');
+            }
+            document.body.removeChild(textArea);
         }
 
         function showNotification(message) {
             const notification = document.createElement('div');
             notification.className = 'copied-notification';
-            notification.textContent = '✓ ' + message;
+            notification.innerHTML = '✓ ' + message;
             document.body.appendChild(notification);
 
             setTimeout(() => {
-                notification.style.animation = 'slideInRight 0.4s ease-out reverse';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 400);
-            }, 2000);
+                notification.remove();
+            }, 3000);
+        }
+
+        // Enhanced event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add copy button event listeners
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const phoneNumber = this.getAttribute('data-phone');
+                    copyPhone(phoneNumber, this);
+                });
+            });
+
+            // Add 3D tilt effect to cards
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+                    
+                    this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-20px) scale(1.02)`;
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
+            });
+
+            // Scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Add scroll animation to elements
+            document.querySelectorAll('.service-card, .section-title').forEach(el => {
+                el.classList.add('fade-in');
+                observer.observe(el);
+            });
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (e.target.classList.contains('copy-btn')) {
+                    e.preventDefault();
+                    const phoneNumber = e.target.getAttribute('data-phone');
+                    copyPhone(phoneNumber, e.target);
+                }
+            }
+        });
+
+        // Performance optimization: Throttle mousemove events
+        function throttle(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
         }
     </script>
 </body>
