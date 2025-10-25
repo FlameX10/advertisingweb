@@ -84,7 +84,6 @@
         }
 
         .address {
-            /* font-size: 1.15em; */
             font-size: xx-small;
             line-height: 1.8;
             color: #fff;
@@ -136,27 +135,68 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 50px 30px;
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             width: 100%;
             max-width: 330px;
             margin: 0 auto;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
         }
 
         .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+            border: 2px solid #FF6B00;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover img {
+            transform: scale(1.2) rotate(5deg);
+            filter: brightness(1.2);
+        }
+
+        .service-card:hover h3 {
+            transform: scale(1.05);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card:hover .call-box {
+            transform: scale(1.08);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-card:hover .call-text {
+            color: #FF6B00;
+            font-weight: 700;
         }
 
         .service-card img {
             width: 80px;
             height: 80px;
             margin-bottom: 25px;
+            transition: all 0.4s ease;
         }
 
         .service-card h3 {
             font-size: 22px;
             font-weight: 700;
             margin-bottom: 20px;
+            transition: all 0.3s ease;
         }
 
         .call-text {
@@ -164,6 +204,7 @@
             color: #555;
             margin-bottom: 15px;
             letter-spacing: 1px;
+            transition: all 0.3s ease;
         }
 
         .call-box {
@@ -180,16 +221,39 @@
             width: 100%;
             max-width: 280px;
             margin: 0 auto 25px;
+            transition: all 0.3s ease;
         }
 
         .hoarding { border-color: #007bff; background: #e9f3ff; }
         .lubricants { border-color: #ff7b00; background: #fff1e6; }
         .batteries { border-color: #28a745; background: #eaffea; }
 
+        /* Enhanced individual card hover effects */
+        .service-card:hover .hoarding {
+            background: linear-gradient(135deg, #e9f3ff, #cce7ff);
+            border-color: #0056b3;
+        }
+
+        .service-card:hover .lubricants {
+            background: linear-gradient(135deg, #fff1e6, #ffe4cc);
+            border-color: #cc5500;
+        }
+
+        .service-card:hover .batteries {
+            background: linear-gradient(135deg, #eaffea, #d4f5d4);
+            border-color: #1e7e34;
+        }
+
         .phone-icon {
             font-size: 22px;
             margin-right: 10px;
             color: deeppink;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .phone-icon {
+            color: #FF6B00;
+            transform: scale(1.2);
         }
 
         .copy-btn {
@@ -208,6 +272,19 @@
         .copy-btn:hover {
             background: #e5e5e5;
             transform: scale(1.05);
+        }
+
+        /* Pulse animation for hover */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .service-card:hover .copy-btn {
+            animation: pulse 1.5s infinite;
+            background: #FF6B00;
+            color: white;
         }
 
         .copied-notification {
